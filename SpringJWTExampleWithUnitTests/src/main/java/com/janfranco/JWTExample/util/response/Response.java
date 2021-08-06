@@ -60,5 +60,15 @@ public class Response<T> {
         public Response<T> build() {
             return new Response<>(this);
         }
+
+        @Override
+        public String toString() {
+            return "ResponseBuilder{" +
+                    "status=" + status +
+                    ", success=" + success +
+                    ", message='" + message + '\'' +
+                    ", data=" + data +
+                    '}';
+        }
     }
 }

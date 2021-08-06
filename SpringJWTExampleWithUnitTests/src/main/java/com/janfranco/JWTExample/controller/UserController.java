@@ -13,6 +13,8 @@ import com.janfranco.JWTExample.service.exception.UserAlreadyExistsException;
 import com.janfranco.JWTExample.service.exception.UserNotFoundException;
 import com.janfranco.JWTExample.util.response.Response;
 import com.janfranco.JWTExample.util.security.Role;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/user")
+@Api(value = "User API")
 public class UserController {
 
     @Autowired
@@ -45,6 +48,7 @@ public class UserController {
 
     @GetMapping("/hello")
     @Authorized
+    @ApiOperation(value = "JWT authorization test")
     public String hello(HttpServletRequest request) throws UserNotFoundException {
         JWTUserDTO jwtUserDTO = (JWTUserDTO) request.getAttribute("user");
         User user = userService.get(jwtUserDTO.getId());
@@ -53,6 +57,7 @@ public class UserController {
 
     @GetMapping("/admin")
     @Authorized(roles = {Role.ADMIN})
+    @ApiOperation(value = "JWT authorization for admin test")
     public String admin(HttpServletRequest request) throws UserNotFoundException {
         JWTUserDTO jwtUserDTO = (JWTUserDTO) request.getAttribute("user");
         User user = userService.get(jwtUserDTO.getId());
